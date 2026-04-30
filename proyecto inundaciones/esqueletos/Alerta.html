@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | Alerta Agua</title>
+   <link rel="stylesheet" href="/estilos/AlertaStyle.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a th:href="@{index.html}">
+        <img src="https://www.image2url.com/r2/default/images/1776220171716-c90e6502-c5a9-45d0-b902-0d072c70be3a.png" class="main-logo" />
+      </a>
+       <div class="nav-menu">
+                <a href="index.html">Inicio</a>
+                <a href="/esqueletos/Monitor.html">Monitor</a>
+                <a href="/esqueletos/Nosotros.html">Nosotros</a>
+                <a href="/esqueletos/Meteorologia.html">Meteorología</a>
+                <a href="/esqueletos/Alerta.html" class="btn-nav">Alertarme</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- FORMULARIO -->
+  <div class="form-wrapper">
+    <div class="form-card">
+      <h2>Registro de Usuario</h2>
+
+      <form action="registroExitoso.html">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="tu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" placeholder="1154533453" required>
+        </div>
+
+        <div class="form-group">
+          <label>Dirección</label>
+          <input type="text" placeholder="Villa soldati" required>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" required>
+          <label>Acepto todos los términos y condiciones</label>
+        </div>
+
+        <button type="submit" class="submit-btn" >Registrarme</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

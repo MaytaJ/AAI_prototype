@@ -443,10 +443,17 @@
                     
                     // Texto descriptivo para la gravedad
                     let gravText = street.grav.replace('-', ' ');
+<<<<<<< HEAD
                     if(street.grav === 'muy-grave') gravText = ' Muy Grave';
                     else if(street.grav === 'grave') gravText = ' Grave';
                     else if(street.grav === 'moderada') gravText = ' Moderado';
                     else gravText = ' Leve';
+=======
+                    if(street.grav === 'muy-grave') gravText = '🔴 Muy Grave';
+                    else if(street.grav === 'grave') gravText = '🟠 Grave';
+                    else if(street.grav === 'moderada') gravText = '🟡 Moderado';
+                    else gravText = '🟢 Leve';
+>>>>>>> 376c42d79964adc5910cb4c93a40245fff1e198f
 
                     item.innerHTML = `
                         <div class="street-item-content">
