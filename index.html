@@ -4,87 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALERTA AGUA | Gestión Profesional</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/estilos/IndexStyle.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./estilos/IndexStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a th:href="@{index.html}" class="logo-container">
-                <img src="https://www.image2url.com/r2/default/images/1776220171716-c90e6502-c5a9-45d0-b902-0d072c70be3a.png" alt="Logo Alerta Agua" class="main-logo" />
-            </a>
-            
-            <div class="nav-menu">
-                <a th:href="@{index.html}">Inicio</a>
-                <a th:href="@{/monitor-historico}">Monitor</a>
-                <a th:href="@{/nosotros}">Nosotros</a>
-                <a th:href="@{/meteorologico}">Meteorología</a>
-                <a th:href="@{/registro-inundacion}" class="btn-nav">Alertarme</a>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a th:href="@{index.html}" class="logo-wrapper">
+            <img src="./imagenes/WhatsApp_Image_2026-04-23_at_10.22.41_PM-modified-removebg-preview.png" alt="Logo Alerta Agua" class="main-logo" />
+            <span class="logo-subtext">A.A.I</span>
+        </a>
+
+        <div class="nav-menu">
+            <a th:href="@{index.html}">Inicio</a>
+            <a th:href="@{/monitor-historico}">Monitor Histórico</a>
+            <a th:href="@{/nosotros}">Nosotros</a>
+            <a th:href="@{/meteorologico}">Meteorología</a>   
+            <a th:href="@{/drainguard}" class="drainguard-link">DrainGuard</a>
+            <a th:href="@{/registro-inundacion}" class="btn-nav">Alertarme</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<main>
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://lapoderosa.org.ar/wp-content/uploads/2016/10/IMG_9854.jpg" alt="Inundación" />
+            <div class="hero-vignette"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="container">
+                <div class="hero-eyebrow">
+                    <span class="pulse-dot"></span>
+                    <span>Monitoreo activo 24/7</span>
+                </div>
+                <h1 class="hero-title">Prevención<br><em>Territorial</em></h1>
+                <p class="hero-text">
+                    Fortalecimiento de comunidades en zonas de riesgo mediante datos hídricos precisos.
+                </p>
+                <div class="hero-actions">
+                    <a th:href="@{/meteorologico}" class="btn-primary">Ver Mapa en Tiempo Real</a>
+                </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <main>
-        <section class="hero">
-            <div class="hero-image">
-                <img src="https://lapoderosa.org.ar/wp-content/uploads/2016/10/IMG_9854.jpg" alt="Fondo Prevención">
-            </div>
-            <div class="hero-overlay"></div> <div class="hero-content">
-                <div class="container">
-                    <span class="badge">Gestión de Crisis</span>
-                    <h1 class="hero-title">Prevención <br><span class="highlight">Territorial</span></h1>
-                    <p class="hero-text">Monitoreo hídrico avanzado para el fortalecimiento de comunidades en zonas de riesgo.</p>
-                    <div class="hero-buttons">
-                        <a th:href="@{/monitor-historico}" class="btn-primary">Dashboard</a>
-                        <a th:href="@{/documentacion}" class="btn-secondary">Documentación</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="nosotros" class="section-about">
-            <div class="container grid-2">
-                <div class="about-text">
-                    <h2 class="section-title">Nuestra Misión</h2>
-                    <p class="about-description">Trabajamos en la intersección de la tecnología y la acción social para minimizar el impacto de las inundaciones en los sectores más vulnerables.</p>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-number">+24/7</span>
-                            <span class="stat-label">Monitoreo Real</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Territorial</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image-wrapper">
-                    <img src="https://www.laizquierdadiario.com/IMG/arton67516.jpg" alt="Acción social" class="about-img">
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
+    <section class="section-features">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h3>ALERTA AGUA</h3>
-                    <p>Soporte técnico y social ante emergencias hídricas.</p>
-                </div>
-                <div class="footer-links">
-                    <a th:href="@{/privacidad}">Privacidad</a>
-                    <a th:href="@{/contacto}">Contacto</a>
-                </div>
+            <div class="features-header">
+                <span class="section-label">Situación Actual</span>
+                <h2 class="section-heading">Meteorología en Tiempo Real</h2>
+                <p class="section-sub">Accedé al mapa interactivo para ver el estado de los ríos y lluvias ahora mismo.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Alerta Agua. Todos los derechos reservados.</p>
+
+            <div class="features-grid">
+                <div class="feat-card feat-main">
+                    <div class="feat-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>Mapa Interactivo</h3>
+                    <p>Sensores que reportan el nivel de ríos y lluvia acumulada cada 5 minutos en Buenos Aires.</p>
+                    <a th:href="@{/meteorologico}" class="feat-link">Abrir Mapa →</a>
+                </div>
+
+                <div class="feat-card">
+                    <div class="feat-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    </div>
+                    <h3>Alertas Críticas</h3>
+                    <p>Notificaciones automáticas cuando los umbrales superan los niveles de seguridad.</p>
+                </div>
+
+                <div class="feat-card">
+                    <div class="feat-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                    </div>
+                    <h3>Reporte Comunitario</h3>
+                    <p>Los vecinos pueden registrar zonas afectadas para mejorar la respuesta local.</p>
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <section class="section-dashboard">
+        <div class="container">
+            <div class="dashboard-layout">
+                <div class="dashboard-copy">
+                    <span class="section-label light">Histórico</span>
+                    <h2 class="section-heading light">Monitor por Comuna</h2>
+                    <p class="body-text light">
+                        Consultá el historial detallado de eventos de inundación en cada comuna de Buenos Aires para entender patrones y riesgos.
+                    </p>
+                    <a th:href="@{/monitor-historico}" class="btn-primary">Ver Historial de Comunas</a>
+                </div>
+
+                <div class="dashboard-visual">
+                    <div class="db-window">
+                        <div class="db-bar">
+                            <span class="db-dot red"></span>
+                            <span class="db-dot yellow"></span>
+                            <span class="db-dot green"></span>
+                            <span class="db-url">alertaagua.ar/monitor-historico</span>
+                        </div>
+                        <img src="https://www.lanacion.com.ar/resizer/v2/el-servicio-meteorologico-nacional-informo-que-se-RO2JVWO6SBDKXKOJK6R2JQORVM.png?auth=4ea74dbb3faf99adc6e03c6f7cc6e4fa7009c632d857af3526130d189fe131c6&width=1200&height=900&quality=70&smart=true" alt="Panel de datos históricos" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-cta">
+        <div class="container">
+            <div class="cta-inner">
+                <div class="cta-text">
+                    <h2 class="cta-title">¿Querés recibir nuestras alertas?</h2>
+                    <p>Registrá tu zona y te avisaremos ante cualquier riesgo detectado por nuestros sensores.</p>
+                </div>
+                <div class="cta-actions">
+                    <a th:href="@{/registro-inundacion}" class="btn-cta-primary">Quiero que me alerten</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Alerta Agua. Sistema de Prevención Comunitaria.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="./JavaScript/indexJs.JS"></script>
+
 
 </body>
 </html>
