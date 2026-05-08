@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros | Alerta Agua</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilos/NosotrosStye.css">
+</head>
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a th:href="@{/}" class="logo-wrapper">
+            <img src="../imagenes/WhatsApp_Image_2026-04-23_at_10.22.41_PM-modified-removebg-preview.png"
+                 class="main-logo" alt="Alerta Agua" />
+            <span class="logo-subtext">A.A.I</span>
+        </a>
+        <div class="nav-menu">
+            <a th:href="@{/}"                  href="../index.html">Inicio</a>
+            <a th:href="@{/monitor-historico}" href="Monitor.html">Monitor</a>
+            <a th:href="@{/nosotros}"          href="Nosotros.html" class="active-link">Nosotros</a>
+            <a th:href="@{/meteorologico}"     href="Meteorologia.html">Meteorología</a>
+            <a th:href="@{/registro-inundacion}" href="Alerta.html" class="btn-nav">Alertarme</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ─── HERO MINI ──────────────────────────────────────────────── -->
+<div class="page-hero">
+    <div class="page-hero-bg">
+        <img src="../imagenes/Imagen_fatima.png" alt="Villa Soldati" />
+        <div class="page-hero-overlay"></div>
+    </div>
+    <div class="page-hero-content">
+        <span class="eyebrow">
+            <span class="pulse-dot"></span>
+            Comuna 8 · Buenos Aires
+        </span>
+        <h1>Sobre <em>nosotros</em></h1>
+        <p>Un equipo que convirtió la preocupación en acción tecnológica para proteger a los vecinos del sur porteño.</p>
+    </div>
+</div>
+
+<!-- ─── INTRO / QUIÉNES SOMOS ──────────────────────────────────── -->
+<section class="section-intro">
+    <div class="container">
+        <div class="intro-grid">
+            <div class="intro-copy">
+                <span class="section-label">Identidad</span>
+                <h2 class="section-heading">¿Quiénes somos?</h2>
+                <p>Somos un equipo de cinco estudiantes comprometidos con la resiliencia urbana y la seguridad de los vecinos del sur de la Ciudad de Buenos Aires.</p>
+                <p>Nuestro proyecto nació al observar que la zona sur históricamente ha sido la más vulnerable ante inundaciones, debido a su topografía baja y la proximidad a la cuenca Matanza-Riachuelo. Queremos ser el puente entre la información técnica y la seguridad de cada hogar del sur porteño.</p>
+            </div>
+            <div class="intro-stats">
+                <div class="stat-box">
+                    <span class="stat-num">5</span>
+                    <span class="stat-desc">Integrantes del equipo</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">50K</span>
+                    <span class="stat-desc">Vecinos que viven en Soldati</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">C8</span>
+                    <span class="stat-desc">Comuna 8 en foco: Soldati, Lugano, Riachuelo</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">24/7</span>
+                    <span class="stat-desc">Monitoreo hídrico en tiempo real</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ORIGEN DEL PROYECTO ────────────────────────────────────── -->
+<section class="section-origin">
+    <div class="container">
+        <div class="origin-header">
+            <span class="section-label light">Historia</span>
+            <h2 class="section-heading light">Cómo surgió A.A.I</h2>
+        </div>
+        <div class="origin-cards">
+            <div class="origin-card">
+                <div class="origin-num">01</div>
+                <h3>La problemática</h3>
+                <p>La Comuna 8 sufre inundaciones recurrentes, especialmente con lluvias intensas. Al ser una zona baja y estar próxima a cursos de agua como el arroyo Cildáñez, el agua se acumula rápidamente causando daños materiales, pérdidas económicas y riesgos para la salud.</p>
+            </div>
+            <div class="origin-card">
+                <div class="origin-num">02</div>
+                <h3>La decisión</h3>
+                <p>Elegimos Villa Soldati como punto de partida porque entendimos que la falta de alertas tempranas es un problema real. Contactamos a la presidenta del barrio, realizamos un relevamiento de preguntas a los habitantes sobre la frecuencia de las inundaciones y sus consecuencias.</p>
+            </div>
+            <div class="origin-card">
+                <div class="origin-num">03</div>
+                <h3>La solución</h3>
+                <p>Diseñamos un sistema que integra sensores ESP32 con conectividad WiFi para medir el nivel del agua en tiempo real. A través de una plataforma web y notificaciones por SMS vía Twilio, los vecinos reciben alertas antes de que ocurra una inundación.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CONTEXTO ────────────────────────────────────────────────── -->
+<section class="section-context">
+    <div class="container">
+        <div class="context-layout">
+            <div class="context-copy">
+                <span class="section-label">Contexto</span>
+                <h2 class="section-heading">La Comuna 8<br>en foco</h2>
+                <p>En Buenos Aires, las inundaciones no ocurren solamente por la lluvia. La saturación de los arroyos entubados como el Cildáñez, que atraviesa nuestra zona, es una causa estructural y silenciosa.</p>
+                <p>El desafío es doble: la impermeabilización del suelo por el crecimiento urbano y la acumulación de residuos que obstruyen los sumideros. Nuestra meta es generar conciencia sobre el riesgo hídrico y proponer soluciones que integren a la comunidad.</p>
+            </div>
+            <div class="context-highlights">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                        <h4>Lago Soldati</h4>
+                        <p>Funciona como reservorio natural clave para aliviar inundaciones, pero requiere gestión constante.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <div>
+                        <h4>Zona baja y vulnerable</h4>
+                        <p>La topografía de la zona sur es naturalmente propensa a la acumulación de agua ante eventos de lluvia intensa.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div>
+                        <h4>Comunidad activa</h4>
+                        <p>Los vecinos de Soldati son quienes más necesitan estas alertas; los incluimos desde el diagnóstico inicial del proyecto.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                    </div>
+                    <div>
+                        <h4>Tecnología al servicio</h4>
+                        <p>ESP32 WiFi, sensores de temperatura y nivel del agua integrados con Spring Boot y notificaciones SMS.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── EQUIPO ──────────────────────────────────────────────────── -->
+<section class="section-team">
+    <div class="container">
+        <div class="team-header">
+            <span class="section-label">El equipo</span>
+            <h2 class="section-heading">Las personas detrás<br>de A.A.I</h2>
+        </div>
+        <div class="team-grid">
+
+            <div class="team-card">
+                <div class="team-avatar">JM</div>
+                <h3>Juan Manuel Mayta</h3>
+                <span class="team-role">Programación & Diseño Web</span>
+                <p>Lidera el desarrollo frontend y backend del sistema. Investigó Spring Boot, sensores en tiempo real y rediseñó la plataforma para que sea funcional y visualmente potente.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">MO</div>
+                <h3>Maximiliano Ortega</h3>
+                <span class="team-role">Desarrollo & Parte Visual</span>
+                <p>Trabaja junto a Mayta en el código y la interfaz del proyecto. Aporta al desarrollo de la experiencia visual del sitio y la integración de componentes.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">AM</div>
+                <h3>Alejandro Marca</h3>
+                <span class="team-role">Investigación & Terreno</span>
+                <p>Se encargó de la investigación del proyecto y del contacto con la comunidad. Elaboró las preguntas para la presidenta de Villa Soldati y relevó datos reales del barrio.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">AR</div>
+                <h3>Atalia Romero</h3>
+                <span class="team-role">Supervisión & Documentación</span>
+                <p>Supervisa el avance general del proyecto y encabeza la redacción del informe. Coordina que cada área mantenga coherencia con los objetivos planteados.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">MF</div>
+                <h3>Milagros Flores</h3>
+                <span class="team-role">Identidad Visual & Comunicación</span>
+                <p>Diseñó el logo del proyecto A.A.I. Está a cargo del informe oral y del video de presentación, dándole voz y cara pública al trabajo del equipo.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── TIMELINE ────────────────────────────────────────────────── -->
+<section class="section-timeline">
+    <div class="container">
+        <div class="timeline-header">
+            <span class="section-label light">Proceso</span>
+            <h2 class="section-heading light">Registro del proyecto</h2>
+        </div>
+        <div class="timeline">
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                    <span class="tl-tag">Etapa 1</span>
+                    <h4>Definición de roles</h4>
+                    <p>El equipo acordó los roles de cada integrante: coordinación, programación, documentación y comunicación. Se estableció que Mayta lideraría el desarrollo y se empezó a pensar en el nombre del proyecto.</p>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                    <span class="tl-tag">Etapa 2</span>
+                    <h4>Identidad: A.A.I nace</h4>
+                    <p>El equipo eligió el nombre <strong>Alerta Ante Inundaciones (A.A.I)</strong>. Milagros diseñó el logo. Se definió la paleta visual y empezó el desarrollo de la página inicial.</p>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                    <span class="tl-tag">Etapa 3</span>
+                    <h4>Investigación y diagnóstico</h4>
+                    <p>Alejandro contactó a la presidenta de Villa Soldati para realizar 5 preguntas clave sobre inundaciones en el barrio. Se elaboró también un formulario para los vecinos: frecuencia, impacto, y si una alerta cambiaría algo en su vida cotidiana.</p>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                    <span class="tl-tag">Etapa 4</span>
+                    <h4>Tecnología & presupuesto</h4>
+                    <p>Se seleccionó el hardware: <strong>ESP32 WiFi + sensor de temperatura</strong>. El equipo buscó precios de materiales para armar una maqueta funcional. Mayta investigó Spring Boot para el backend y la integración con bases de datos.</p>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                    <span class="tl-tag">Etapa 5</span>
+                    <h4>Rediseño y expansión</h4>
+                    <p>Mayta rediseñó la plataforma buscando que dejara de ser simple. Se integró monitoreo en tiempo real, mapa interactivo y el sistema de alertas vía SMS con Twilio. Atalia y el equipo avanzaron con el informe final.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA ─────────────────────────────────────────────────────── -->
+<section class="section-cta">
+    <div class="container">
+        <div class="cta-inner">
+            <div>
+                <span class="section-label">Sumate</span>
+                <h2 class="cta-title">¿Vivís en la zona?</h2>
+                <p>Registrá tu dirección y recibí alertas antes de que llegue el agua.</p>
+            </div>
+            <a th:href="@{/registro-inundacion}" class="btn-cta">Quiero alertas</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+    <p>&copy; 2026 Alerta Agua — Sistema de Prevención Comunitaria.</p>
+</footer>
+
+<script src="../JavaScript/Nostrosjs.js"></script>
+</body>
+</html>

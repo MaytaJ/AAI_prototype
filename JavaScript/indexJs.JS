@@ -4,36 +4,35 @@ const menu   = document.querySelector('.nav-menu');
 
 // Scroll effect
 window.addEventListener('scroll', () => {
+
+    // NO aplicar efecto mientras el menú está abierto
+    if (menu && menu.classList.contains('open')) return;
+
     navbar.classList.toggle('scrolled', window.scrollY > 50);
 });
 
 // Mobile menu toggle
 if (ham && menu) {
+
     ham.addEventListener('click', () => {
+
         ham.classList.toggle('open');
         menu.classList.toggle('open');
+
+        // bloquear scroll cuando el menú está abierto
+        document.body.style.overflow = menu.classList.contains('open')
+            ? 'hidden'
+            : '';
     });
 
-    // Cerrar menu al hacer click en un link
+    // cerrar menú al tocar link
     menu.querySelectorAll('a').forEach(link => {
+
         link.addEventListener('click', () => {
+
             ham.classList.remove('open');
             menu.classList.remove('open');
+            document.body.style.overflow = '';
         });
     });
 }
-
-// Fade-up on scroll
-const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            fadeObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.feat-card, .dashboard-layout, .cta-inner').forEach(el => {
-    el.classList.add('fade-up');
-    fadeObserver.observe(el);
-});

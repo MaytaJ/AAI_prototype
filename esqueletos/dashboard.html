@@ -3,254 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A.R.A.S. - Enterprise Analytics (Light)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Historial de Inundaciones | Dashboard</title>
+    
+    <!-- Tipografías -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f8fafc; /* slate-50 */
-            color: #334155; /* slate-700 */
-        }
-
-        /* Estilo de tarjeta corporativa blanca */
-        .card-white { 
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
-            border-radius: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        /* Scrollbar elegante y sutil */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        
-        .active-city {
-            background: #eff6ff; /* blue-50 */
-            border: 1px solid #bfdbfe; /* blue-200 */
-            color: #1d4ed8;
-        }
-    </style>
+    <!-- Referencia al CSS -->
+<link rel="stylesheet" href="../estilos/DashBoard.css">
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <!-- BARRA LATERAL IZQUIERDA -->
+    <aside class="sidebar">
+        <div class="brand">
+            <svg class="brand-icon" viewBox="0 0 24 24"><path d="M2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm10-8c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm-1 4h2v5h-2V8zm0 6h2v2h-2v-2z"/></svg>
+            Inundaciones Argentina
+        </div>
+        
+        <div class="sidebar-section-title">COMUNAS</div>
+        
+        <div class="comunas-container" id="sidebar-content">
+            <!-- Inyectado por JS -->
+        </div>
 
-        const DATA_BUENOS_AIRES = [
-            { id: 1, ciudad: "La Plata", muertes: 89, evacuados: 3500, gravedad: 94, lluvia: [15, 55, 140, 185, 90, 45], dano_estimado: "180M", riesgo: "CRÍTICO" },
-            { id: 2, ciudad: "CABA (Palermo)", muertes: 1, evacuados: 250, gravedad: 22, lluvia: [5, 12, 45, 38, 15, 10], dano_estimado: "25M", riesgo: "MODERADO" },
-            { id: 3, ciudad: "Luján", muertes: 3, evacuados: 1200, gravedad: 70, lluvia: [20, 65, 95, 110, 130, 95], dano_estimado: "55M", riesgo: "ALTO" },
-            { id: 4, ciudad: "La Matanza", muertes: 5, evacuados: 2800, gravedad: 62, lluvia: [10, 40, 75, 120, 85, 40], dano_estimado: "42M", riesgo: "ALTO" },
-            { id: 5, ciudad: "Tigre (Delta)", muertes: 0, evacuados: 600, gravedad: 45, lluvia: [30, 80, 110, 90, 70, 50], dano_estimado: "18M", riesgo: "ALERTA" },
-            { id: 6, ciudad: "Bahía Blanca", muertes: 13, evacuados: 800, gravedad: 55, lluvia: [40, 90, 150, 60, 20, 10], dano_estimado: "90M", riesgo: "ALTO" }
-        ];
+        <div class="sidebar-legend">
+            <div class="sidebar-section-title" style="padding: 0 0 10px 0;">NIVEL DE AFECTACIÓN</div>
+            <div class="legend-item"><span class="dot alto"></span> Alto</div>
+            <div class="legend-item"><span class="dot medio"></span> Medio</div>
+            <div class="legend-item"><span class="dot bajo"></span> Bajo</div>
+        </div>
+    </aside>
 
-        function AnimatedNumber({ value }) {
-            const [display, setDisplay] = useState(0);
-            useEffect(() => {
-                let start = display;
-                const end = value;
-                const duration = 1200;
-                let startTime = null;
-                const animate = (now) => {
-                    if (!startTime) startTime = now;
-                    const progress = Math.min((now - startTime) / duration, 1);
-                    setDisplay(Math.floor(progress * (end - start) + start));
-                    if (progress < 1) requestAnimationFrame(animate);
-                };
-                requestAnimationFrame(animate);
-            }, [value]);
-            return <span>{display.toLocaleString()}</span>;
-        }
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
+        
+        <header class="header-top">
+            <div class="header-title">
+                <h1>Historial de Inundaciones</h1>
+                <h2 id="main-subtitle">Argentina</h2>
+            </div>
+            <div class="header-actions">
+                <button class="btn-outline">📅 01/01/1900 - 31/12/2024</button>
+            </div>
+        </header>
 
-        function App() {
-            const [selected, setSelected] = useState(DATA_BUENOS_AIRES[0]);
-            const chartRefs = useRef({ donut: null, line: null });
-            const canvasRefs = { donut: useRef(null), line: useRef(null) };
+        <div class="kpi-row">
+            <div class="card kpi-mini">
+                <div class="kpi-mini-icon">🌊</div>
+                <div class="kpi-mini-title">Eventos registrados</div>
+                <div class="kpi-mini-value" id="kpi-eventos">0</div>
+                <div class="kpi-mini-sub">1900 - 2024</div>
+            </div>
+            <div class="card kpi-mini">
+                <div class="kpi-mini-icon" style="color: #805ad5; background: #faf5ff;">👥</div>
+                <div class="kpi-mini-title">Personas afectadas</div>
+                <div class="kpi-mini-value" id="kpi-personas">0</div>
+                <div class="kpi-mini-sub">(estimado)</div>
+            </div>
+            <div class="card kpi-mini">
+                <div class="kpi-mini-icon" style="color: var(--bajo); background: #f0fff4;">🏠</div>
+                <div class="kpi-mini-title">Viviendas afectadas</div>
+                <div class="kpi-mini-value" id="kpi-viviendas">0</div>
+                <div class="kpi-mini-sub">(estimado)</div>
+            </div>
+            <div class="card kpi-mini">
+                <div class="kpi-mini-icon" style="color: var(--medio); background: #fffff0;">🏪</div>
+                <div class="kpi-mini-title">Comercios afectados</div>
+                <div class="kpi-mini-value" id="kpi-comercios">0</div>
+                <div class="kpi-mini-sub">(estimado)</div>
+            </div>
+            <div class="card kpi-mini">
+                <div class="kpi-mini-icon" style="color: var(--primary); background: var(--primary-light);">💲</div>
+                <div class="kpi-mini-title">Daños materiales</div>
+                <div class="kpi-mini-value" id="kpi-danos">$ 0</div>
+                <div class="kpi-mini-sub">(estimado)</div>
+            </div>
+        </div>
 
-            useEffect(() => {
-                // DONUT CHART (Círculo)
-                const ctxD = canvasRefs.donut.current.getContext('2d');
-                if (!chartRefs.current.donut) {
-                    chartRefs.current.donut = new Chart(ctxD, {
-                        type: 'doughnut',
-                        data: {
-                            datasets: [{
-                                data: [selected.gravedad, 100 - selected.gravedad],
-                                backgroundColor: ['#2563eb', '#f1f5f9'], // Azul y gris muy claro
-                                borderWidth: 0,
-                                borderRadius: 20
-                            }]
-                        },
-                        options: { 
-                            cutout: '85%', 
-                            animation: { duration: 1500, easing: 'easeOutExpo' }, 
-                            plugins: { tooltip: { enabled: false } },
-                            maintainAspectRatio: false
-                        }
-                    });
-                } else {
-                    chartRefs.current.donut.data.datasets[0].data = [selected.gravedad, 100 - selected.gravedad];
-                    chartRefs.current.donut.update();
-                }
-
-                // LINE CHART (Línea de lluvia)
-                const ctxL = canvasRefs.line.current.getContext('2d');
-                if (!chartRefs.current.line) {
-                    chartRefs.current.line = new Chart(ctxL, {
-                        type: 'line',
-                        data: {
-                            labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
-                            datasets: [{
-                                data: selected.lluvia,
-                                borderColor: '#3b82f6',
-                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                                fill: true,
-                                tension: 0.4,
-                                pointRadius: 0
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: {
-                                y: { display: false, min: 0 },
-                                x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
-                            }
-                        }
-                    });
-                } else {
-                    chartRefs.current.line.data.datasets[0].data = selected.lluvia;
-                    chartRefs.current.line.update();
-                }
-            }, [selected]);
-
-            return (
-                // Wrapper principal: Limitamos a 1600px para pantallas ultra anchas y lo centramos
-                <div className="min-h-screen bg-[#f8fafc] w-full flex flex-col lg:flex-row max-w-[1600px] mx-auto overflow-hidden">
-                    
-                    {/* PANEL IZQUIERDO / SUPERIOR (Responsivo) */}
-                    <aside className="w-full lg:w-80 xl:w-96 flex flex-col p-4 lg:p-6 lg:border-r border-slate-200 shrink-0 bg-[#f8fafc] z-10">
-                        <div className="mb-4 lg:mb-8 flex justify-between items-center lg:block">
-                            <div>
-                                <h1 className="text-2xl font-black text-slate-900 tracking-tighter">DATA<span className="text-blue-600 italic">CORE</span></h1>
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">Siniestros BA</p>
-                            </div>
-                            <div className="lg:hidden px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">
-                                {selected.ciudad}
-                            </div>
-                        </div>
-                        
-                        {/* Selector de Ciudades: Scroll horizontal en móvil, lista vertical en PC */}
-                        <div className="flex-1 lg:overflow-y-auto">
-                            <p className="hidden lg:block text-[10px] font-bold text-slate-400 uppercase mb-4 px-2">Jurisdicciones</p>
-                            <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x">
-                                {DATA_BUENOS_AIRES.map(city => (
-                                    <button 
-                                        key={city.id}
-                                        onClick={() => setSelected(city)}
-                                        className={`shrink-0 w-64 lg:w-full text-left px-5 py-4 rounded-2xl transition-all duration-300 snap-center border ${
-                                            selected.id === city.id 
-                                            ? 'active-city font-bold shadow-md shadow-blue-500/10' 
-                                            : 'border-transparent text-slate-500 hover:bg-white hover:shadow-sm'
-                                        }`}
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm">{city.ciudad}</span>
-                                            <span className={`text-[10px] px-2 py-1 rounded-md ${selected.id === city.id ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
-                                                {city.riesgo}
-                                            </span>
-                                        </div>
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </aside>
-
-                    {/* PANEL CENTRAL: CONTENIDO DINÁMICO */}
-                    <main className="flex-1 p-4 lg:p-6 flex flex-col gap-6 lg:overflow-y-auto">
-                        
-                        {/* FILA SUPERIOR: HERO CHART & STATS */}
-                        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                            
-                            {/* EL CÍRCULO PROTAGONISTA */}
-                            <div className="col-span-1 lg:col-span-5 xl:col-span-4 card-white flex flex-col items-center justify-center relative p-8 min-h-[300px]">
-                                <div className="w-full aspect-square max-w-[250px] lg:max-w-[300px] relative">
-                                    <canvas ref={canvasRefs.donut}></canvas>
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span className="text-[10px] font-bold text-blue-500 uppercase tracking-[0.4em] mb-1">Severity</span>
-                                        <h2 className="text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter"><AnimatedNumber value={selected.gravedad} />%</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* MÉTRICAS PRINCIPALES */}
-                            <div className="col-span-1 lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
-                                <div className="card-white p-6 lg:p-8 flex items-center justify-between">
-                                    <div>
-                                        <h3 className="text-4xl lg:text-6xl font-black text-slate-900 tracking-tighter uppercase italic">{selected.ciudad}</h3>
-                                        <p className="text-slate-500 text-xs font-semibold uppercase mt-1 tracking-widest">Reporte Oficial Validado</p>
-                                    </div>
-                                    <div className="hidden sm:flex h-16 w-16 bg-blue-50 rounded-2xl items-center justify-center">
-                                        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
-                                    <div className="card-white p-6 lg:p-8 flex flex-col justify-center">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Víctimas Fatales</p>
-                                        <p className="text-5xl lg:text-6xl font-black text-slate-800 tracking-tighter"><AnimatedNumber value={selected.muertes} /></p>
-                                    </div>
-                                    <div className="card-white p-6 lg:p-8 flex flex-col justify-center">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Población Evacuada</p>
-                                        <p className="text-5xl lg:text-6xl font-black text-slate-800 tracking-tighter"><AnimatedNumber value={selected.evacuados} /></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* FILA INFERIOR: ANÁLISIS TEMPORAL & DATA GRID */}
-                        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-6">
-                            <div className="col-span-1 lg:col-span-8 card-white p-6 lg:p-8 relative min-h-[250px] flex flex-col">
-                                <div className="flex justify-between items-center mb-6">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Precipitación (24 Hrs)</p>
-                                    <div className="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-bold text-slate-600">
-                                        Max: {Math.max(...selected.lluvia)} mm
-                                    </div>
-                                </div>
-                                <div className="flex-1 w-full relative">
-                                    <canvas ref={canvasRefs.line}></canvas>
-                                </div>
-                            </div>
-                            
-                            <div className="col-span-1 lg:col-span-4 card-white p-6 lg:p-8 flex flex-col justify-center gap-6">
-                                <div>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Impacto Económico</p>
-                                    <p className="text-3xl lg:text-4xl font-black text-slate-800 tracking-tight italic">USD {selected.dano_estimado}</p>
-                                </div>
-                                <button className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-blue-600 transition-colors shadow-lg shadow-slate-200">
-                                    Descargar Reporte PDF
-                                </button>
-                            </div>
-                        </section>
-
-                    </main>
+        <div class="middle-grid">
+            <div class="card">
+                <div style="display:flex; justify-content:space-between;">
+                    <div>
+                        <h3 class="card-title">Eventos por año</h3>
+                        <p class="card-subtitle">Cantidad de eventos registrados por año.</p>
+                    </div>
+                    <button class="btn-outline" style="height:32px;">Por década ⌄</button>
                 </div>
-            );
-        }
+                <div class="chart-wrapper">
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border); font-size:0.8rem; color:var(--primary); display:flex; gap:8px;">
+                    <span>ℹ️</span> Tendencia general: aumento de eventos de inundaciones en las últimas décadas.
+                </div>
+            </div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+            <div class="side-widgets">
+                <div class="card history-card">
+                    <h3 class="card-title">Último historial registrado</h3>
+                    <div class="history-item">
+                        <div class="history-icon">🌊</div>
+                        <div class="history-text">
+                            <strong id="ultimo-fecha">Mayo 2024 - Ubicación</strong>
+                            <p id="ultimo-desc">Detalle del último evento registrado en la zona seleccionada.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Daños materiales <span style="font-weight:400; font-size:0.8rem; color:var(--text-muted);">(estimado)</span></h3>
+                    <div class="doughnut-wrapper">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="card-title" style="margin-bottom: -10px;">Impacto general</h3>
+        <div class="bottom-row">
+            <div class="card impact-card">
+                <div class="impact-icon" style="color: #805ad5; background: #faf5ff;">👥</div>
+                <div class="impact-content">
+                    <h3>Impacto social</h3>
+                    <p>Afectación directa sobre la población y las comunidades.</p>
+                    <div class="impact-value" id="imp-social-val">0</div>
+                    <div class="kpi-mini-sub">Personas afectadas</div>
+                </div>
+            </div>
+            <div class="card impact-card">
+                <div class="impact-icon" style="color: var(--alto); background: #fff5f5;">❤️‍🩹</div>
+                <div class="impact-content">
+                    <h3>Víctimas</h3>
+                    <p>Personas fallecidas o desaparecidas a causa de las inundaciones.</p>
+                    <div class="impact-value" id="imp-vic-val">0</div>
+                    <div class="kpi-mini-sub">(estimado)</div>
+                </div>
+            </div>
+            <div class="card impact-card">
+                <div class="impact-icon" style="color: var(--bajo); background: #f0fff4;">💲</div>
+                <div class="impact-content">
+                    <h3>Impacto económico</h3>
+                    <p>Estimación total de pérdidas económicas por inundaciones.</p>
+                    <div class="impact-value" id="imp-eco-val">$ 0</div>
+                    <div class="kpi-mini-sub">(estimado)</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Referencia al JS -->
+    <script src="../JavaScript/DashBoardjs.js"></script>
 </body>
 </html>

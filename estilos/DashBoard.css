@@ -1,0 +1,213 @@
+/* ================= VARIABLES DEL DISEÑO CLARO ================= */
+:root {
+    --sidebar-bg:   #13233c;
+    --main-bg:      #f4f6fa;
+    --card-bg:      #ffffff;
+    --text-main:    #1a202c;
+    --text-muted:   #718096;
+    --primary:      #2b6cb0;
+    --primary-light:#ebf8ff;
+    --border:       #e2e8f0;
+    
+    /* Colores de Severidad */
+    --alto:         #e53e3e; /* Rojo */
+    --medio:        #d69e2e; /* Amarillo */
+    --bajo:         #38a169; /* Verde */
+    
+    --font-main:    "Inter", sans-serif;
+    --shadow:       0 2px 10px rgba(0, 0, 0, 0.04);
+    --radius:       12px;
+}
+
+/* ─── RESET Y BASE ────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-main);
+    background: var(--main-bg);
+    color: var(--text-main);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ─── BARRA LATERAL (SIDEBAR) ────────────────────────────────────── */
+.sidebar {
+    width: 280px;
+    background: var(--sidebar-bg);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.brand {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.brand-icon { width: 32px; height: 32px; fill: #4299e1; }
+
+.sidebar-section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+    padding: 20px 24px 10px;
+    font-weight: 600;
+}
+
+.comunas-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.comunas-container::-webkit-scrollbar { width: 4px; }
+.comunas-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+.comuna-group { border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+.comuna-header {
+    padding: 12px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+.comuna-header:hover { background: rgba(255,255,255,0.05); }
+
+.comuna-header-left { display: flex; align-items: center; gap: 10px; }
+.icon-building { width: 14px; opacity: 0.7; }
+
+.dot {
+    width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+}
+.dot.alto { background: var(--alto); }
+.dot.medio { background: var(--medio); }
+.dot.bajo { background: var(--bajo); }
+
+.streets-list {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(0,0,0,0.15);
+}
+.comuna-group.active .streets-list { max-height: 400px; }
+
+.street-item {
+    padding: 10px 24px 10px 48px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+.street-item:hover, .street-item.active {
+    color: white;
+    background: rgba(255,255,255,0.08);
+    border-left-color: #4299e1;
+}
+
+.sidebar-legend {
+    padding: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.legend-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.8rem; margin-bottom: 8px; color: rgba(255,255,255,0.8);
+}
+
+/* ─── ÁREA PRINCIPAL (MAIN CONTENT) ──────────────────────────────── */
+.main-content {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.header-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+}
+.header-title h1 { font-size: 1.6rem; font-weight: 600; color: var(--text-main); }
+.header-title h2 { font-size: 1.1rem; font-weight: 500; color: var(--primary); margin-top: 4px; }
+
+.header-actions { display: flex; gap: 12px; }
+.btn-outline {
+    padding: 8px 16px; border: 1px solid var(--border);
+    background: var(--card-bg); border-radius: 6px;
+    font-size: 0.85rem; font-weight: 500; cursor: pointer;
+    color: var(--text-main); display: flex; align-items: center; gap: 8px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+.kpi-mini {
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+}
+.kpi-mini-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--primary-light); color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px; font-size: 1.2rem;
+}
+.kpi-mini-title { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+.kpi-mini-value { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+.kpi-mini-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+
+.middle-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 24px;
+}
+
+.card-title {
+    font-size: 1rem; font-weight: 600; margin-bottom: 4px;
+}
+.card-subtitle {
+    font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;
+}
+
+.chart-wrapper { height: 300px; width: 100%; }
+.doughnut-wrapper { height: 200px; width: 100%; position: relative; }
+
+.history-card { margin-bottom: 24px; }
+.history-item {
+    display: flex; gap: 12px; background: var(--primary-light);
+    padding: 16px; border-radius: 8px; margin-top: 16px;
+}
+.history-icon { font-size: 1.5rem; }
+.history-text strong { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+.history-text p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+.bottom-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+.impact-card { display: flex; align-items: flex-start; gap: 16px; }
+.impact-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; flex-shrink: 0;
+}
+.impact-content h3 { font-size: 0.85rem; margin-bottom: 4px; }
+.impact-content p { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; }
+.impact-value { font-size: 1.5rem; font-weight: 700; margin-bottom: 2px;}

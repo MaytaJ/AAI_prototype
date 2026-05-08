@@ -82,11 +82,32 @@ a { text-decoration: none; }
     text-transform: uppercase;
     opacity: 0.75;
 }
-
 .nav-menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(10, 18, 32, 0.98);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
     display: flex;
-    gap: 2.2rem;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 2.5rem;
+
+    transform: translateY(-100%);
+    transition: transform 0.45s ease;
+
+    z-index: 2000;
+    visibility: hidden;
+}
+
+.nav-menu.open {
+    transform: translateY(0);
+    visibility: visible;
 }
 
 .nav-menu a {

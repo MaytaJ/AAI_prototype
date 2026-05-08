@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Villa Soldati</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../estilos/Meteorologia.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a th:href="@{index.html}">
+        <img src="https://www.image2url.com/r2/default/images/1776220171716-c90e6502-c5a9-45d0-b902-0d072c70be3a.png" class="main-logo" />
+      </a>
+      <div class="nav-menu">
+        <a th:href="@{index.html}">Inicio</a>
+        <a th:href="@{/monitor-historico}">Monitor</a>
+        <a th:href="@{/nosotros}">Nosotros</a>
+        <a th:href="@{/meteorologico}">Meteorología</a>
+        <a th:href="@{/registro-inundacion}" class="btn-nav">Alertarme</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CUADRO CLIMA -->
+  <div class="info-box" id="climaBox">
+    <h4>Clima</h4>
+    <p>Cargando...</p>
+  </div>
+
+  <!-- CUADRO INUNDACIÓN -->
+  <div class="flood-box">
+    <h4>Nivel de inundación</h4>
+    <div class="level"><div class="color-box light"></div>Bajo</div>
+    <div class="level"><div class="color-box medium"></div>Medio</div>
+    <div class="level"><div class="color-box strong"></div>Alto</div>
+    <div class="level"><div class="color-box extreme"></div>Crítico</div>
+  </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+ <!-- MAPA -->
+<div id="map"></div>
+
+<!-- 1️⃣ Leaflet -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- 2️⃣ Heatmap (IMPORTANTE) -->
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+<!-- 3️⃣ TU CÓDIGO -->
+<script>
+  const soldati = [-34.6654, -58.4458];
+
+  const map = L.map('map').setView(soldati, 15);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const apiKey = "73b0f72e0242046cd5ca4ca81ba80741";
+
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${soldati[0]}&lon=${soldati[1]}&appid=${apiKey}&units=metric&lang=es`)
+    .then(res => res.json())
+    .then(data => {
+      const humedad = data.main.humidity;
+
+      document.getElementById("climaBox").innerHTML = `
+        <h4>Clima</h4>
+        <p>${data.weather[0].description}</p>
+        <p>${data.main.temp}°C</p>
+        <p>Humedad: ${humedad}%</p>
+      `;
+
+      // 🔥 HEATMAP (reemplaza el círculo)
+      let heatPoints = [];
+
+      for (let i = 0; i < 80; i++) {
+        const latOffset = (Math.random() - 0.5) * 0.01;
+        const lngOffset = (Math.random() - 0.5) * 0.01;
+
+        heatPoints.push([
+          soldati[0] + latOffset,
+          soldati[1] + lngOffset,
+          humedad / 100
+        ]);
+      }
+
+      L.heatLayer(heatPoints, {
+        radius: 25,
+        blur: 20,
+        gradient: {
+          0.2: '#b3d9ff',
+          0.4: '#66b3ff',
+          0.6: '#1a8cff',
+          1.0: '#004080'
+        }
+      }).addTo(map);
+    });
+</script>
